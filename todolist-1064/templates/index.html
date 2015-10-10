@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8">
+	<title>Bug Reporter</title>
+</head>
+<body>
+	<h1>Bug Reporter</h1>
+
+	<section>
+	<form method="post" action="">
+
+		<input type="hidden" name="action" value="add_bug" />
+
+		<div>						
+		<label for="bugName">Title </label>
+		<input name="bugName" type="text" maxlength="255" value=""/> 
+		</div>
+
+		<div>
+		<label for="bugClass">Class </label>
+		<select name="bugClass"> 
+			<option value="" selected="selected"></option>
+			<option value="1" >Feature Request</option>
+			<option value="2" >System Error</option>
+			<option value="3" >Serious Bug</option>
+		</select>
+		</div>
+			    
+		<input type="submit" value="Add Entry" />
+	</form>
+	</section>
+
+	{% if message %}
+	<section>
+	<h3>Result</h3>
+		<p>{{ message }}</p>
+	</section>
+	{% endif %}
+
+
+	</body>
+</html>
