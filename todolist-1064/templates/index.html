@@ -21,9 +21,9 @@
 		<label for="bugClass">Class </label>
 		<select name="bugClass"> 
 			<option value="" selected="selected"></option>
-			<option value="1" >Feature Request</option>
-			<option value="2" >System Error</option>
-			<option value="3" >Serious Bug</option>
+			<option value="Feature Request" >Feature Request</option>
+			<option value="System Error" >System Error</option>
+			<option value="Serious Bug" >Serious Bug</option>
 		</select>
 		</div>
 			    
@@ -37,6 +37,27 @@
 		<p>{{ message }}</p>
 	</section>
 	{% endif %}
+
+	{% if bugName %}
+	<table border="1">
+		<tr>
+    		<th>Bug Title</th>
+    		<th>Class</th> 
+    		<th>Active</th>
+    		<th></th>
+  		</tr>
+
+  		
+  		<tr>
+    		<td>{{ bugName|e }}</td>
+    		<td>{{ bugClass|e }}</td> 
+    		<td>{{ active }}</td>
+    		<td><a href="">Edit</a></td>
+  		</tr>
+  		
+	</table>
+
+{% endif %}
 
 
 	</body>

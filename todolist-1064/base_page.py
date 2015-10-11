@@ -15,6 +15,8 @@ class MainHandler(webapp2.RequestHandler):
 			autoescape=True
 			)
 
+	#template_variables = {}
+
 	def render(self, template, template_variables={}):
 		template=self.jinja2.get_template(template)
 		self.response.write(template.render(template_variables))
@@ -26,12 +28,12 @@ class MainHandler(webapp2.RequestHandler):
 		action = self.request.get('action')
 
 		#self.template_variables['form_content'] = {}
-		#template = JINJA_ENVIRONMENT.get_template('index.html')
+
 		#for i in self.request.arguments():
-		#	self.template_variables['form_content'][i] = self.request.get(i)
+			#self.template_variables['form_content'][i] = self.request.get(i)
 		#self.response.write(template.render(self.template_variables))
 
-		
+		#[{'name':x.name, 'key':x.key.urlsafe()} for x in db_defs.bugEntry.query().fetch()]
 		if action == 'add_bug':
 			k = ndb.Key(db_defs.bugEntry, 'base-data')
 			bug = db_defs.bugEntry(parent=k)
@@ -39,9 +41,12 @@ class MainHandler(webapp2.RequestHandler):
 			bug.bugClass = self.request.get('bugClass')
 			bug.active = True
 			bug.put()
-			self.render('index.html', {'message': 'Added ' + bug.bugName + ' to database.'})
-		else:
-			self.render('index.html', {'message': 'Action is unknown.'})
+			#self.template_variables['message'] = 'Added ' + {{ bug.bugName }} + ' to database'
+		#elif action == 'edit_bug':
+		#take to edit page
+		#else:
+			#self.template_variables['message'] = 'Unknown action.'
+			self.render('index.html', {'message': 'Success', 'bugName': bug.bugName, 'bugClass': bug.bugClass, 'active': bug.active})
 
 
 
