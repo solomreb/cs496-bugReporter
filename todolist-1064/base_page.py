@@ -16,17 +16,17 @@ class MainHandler(webapp2.RequestHandler):
 			)
 
 	#template_variables = {}
-
+	entries = []
 	def render(self, template, template_variables={}):
 		template=self.jinja2.get_template(template)
 		self.response.write(template.render(template_variables))
 
 	def get(self):
-		self.render('index.html')
+			self.render('index.html', {'entries': self.entries})
 
 	def post(self):
 		action = self.request.get('action')
-
+		
 		#self.template_variables['form_content'] = {}
 
 		#for i in self.request.arguments():
@@ -41,13 +41,13 @@ class MainHandler(webapp2.RequestHandler):
 			bug.bugClass = self.request.get('bugClass')
 			bug.active = True
 			bug.put()
+			self.entries.append(bug)
 			#self.template_variables['message'] = 'Added ' + {{ bug.bugName }} + ' to database'
 		#elif action == 'edit_bug':
 		#take to edit page
 		#else:
 			#self.template_variables['message'] = 'Unknown action.'
-			self.render('index.html', {'message': 'Success', 'bugName': bug.bugName, 'bugClass': bug.bugClass, 'active': bug.active})
-
+			self.render('index.html', {'entries': self.entries})
 
 
 

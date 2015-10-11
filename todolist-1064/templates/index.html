@@ -27,18 +27,13 @@
 		</select>
 		</div>
 			    
-		<input type="submit" value="Add Entry" />
+		<input type="submit" value="Add Entry" /> 
 	</form>
 	</section>
 
-	{% if message %}
-	<section>
-	<h3>Result</h3>
-		<p>{{ message }}</p>
-	</section>
-	{% endif %}
+	<br>
 
-	{% if bugName %}
+	{% if entries %}
 	<table border="1">
 		<tr>
     		<th>Bug Title</th>
@@ -47,17 +42,18 @@
     		<th></th>
   		</tr>
 
-  		
+  		{% for x in entries %}
   		<tr>
-    		<td>{{ bugName|e }}</td>
-    		<td>{{ bugClass|e }}</td> 
-    		<td>{{ active }}</td>
+    		<td>{{ x.bugName|e }}</td>
+    		<td>{{ x.bugClass|e }}</td> 
+    		<td>{{ x.active }}</td>
     		<td><a href="">Edit</a></td>
   		</tr>
+  		{% endfor %}
   		
 	</table>
 
-{% endif %}
+	{% endif %}
 
 
 	</body>
