@@ -2,6 +2,7 @@ import webapp2
 import os
 import jinja2
 from google.appengine.ext import ndb
+from google.appengine.ext import blobstore
 import db_defs
 
 
@@ -15,39 +16,38 @@ class MainHandler(webapp2.RequestHandler):
 			autoescape=True
 			)
 
-	#template_variables = {}
-	entries = []
+	template_variables = {}
+
+	def __init__(self, request, response):
+		self.initialize(request, response)
+		self.template_variables = {}
+
 	def render(self, template, template_variables={}):
 		template=self.jinja2.get_template(template)
 		self.response.write(template.render(template_variables))
 
 	def get(self):
-			self.render('index.html', {'entries': self.entries})
+		self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'active': x.active, 'key': x.key.urlsafe()} for x in db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()]
+		self.render('index.html', self.template_variables)
 
 	def post(self):
 		action = self.request.get('action')
 		
-		#self.template_variables['form_content'] = {}
-
-		#for i in self.request.arguments():
-			#self.template_variables['form_content'][i] = self.request.get(i)
-		#self.response.write(template.render(self.template_variables))
-
-		#[{'name':x.name, 'key':x.key.urlsafe()} for x in db_defs.bugEntry.query().fetch()]
 		if action == 'add_bug':
-			k = ndb.Key(db_defs.bugEntry, 'base-data')
-			bug = db_defs.bugEntry(parent=k)
-			bug.bugName = self.request.get('bugName')
-			bug.bugClass = self.request.get('bugClass')
-			bug.active = True
-			bug.put()
-			self.entries.append(bug)
-			#self.template_variables['message'] = 'Added ' + {{ bug.bugName }} + ' to database'
-		#elif action == 'edit_bug':
-		#take to edit page
-		#else:
-			#self.template_variables['message'] = 'Unknown action.'
-			self.render('index.html', {'entries': self.entries})
+			if self.request.get('bugName') == "":
+				self.template_variables['message'] = "Title required"
+			else:
+				k = ndb.Key(db_defs.bugEntry, 'base-data')
+				bug = db_defs.bugEntry(parent=k)
+
+				bug.bugName = self.request.get('bugName')
+				bug.bugClass = self.request.get('bugClass')
+				bug.active = True
+				bug.put()
+
+			self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'active': x.active, 'key': x.key.urlsafe()} for x in db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()]
+			self.render('index.html', self.template_variables)
+	
 
 
 

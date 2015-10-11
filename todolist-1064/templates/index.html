@@ -15,6 +15,10 @@
 		<div>						
 		<label for="bugName">Title </label>
 		<input name="bugName" type="text" maxlength="255" value=""/> 
+	{% if message %}
+    	<font color= "red">{{ message }}</font>
+
+	{% endif %}
 		</div>
 
 		<div>
@@ -33,7 +37,7 @@
 
 	<br>
 
-	{% if entries %}
+	{% if bugs %}
 	<table border="1">
 		<tr>
     		<th>Bug Title</th>
@@ -42,12 +46,12 @@
     		<th></th>
   		</tr>
 
-  		{% for x in entries %}
+  		{% for x in bugs %}
   		<tr>
-    		<td>{{ x.bugName|e }}</td>
-    		<td>{{ x.bugClass|e }}</td> 
+    		<td>{{ x.name|e }}</td>
+    		<td>{{ x.class|e }}</td> 
     		<td>{{ x.active }}</td>
-    		<td><a href="">Edit</a></td>
+    		<td><a href="/edit?key={{ x.key }}">Edit</a></td>
   		</tr>
   		{% endfor %}
   		
