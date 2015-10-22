@@ -2,7 +2,6 @@ import webapp2
 import os
 import jinja2
 from google.appengine.ext import ndb
-from google.appengine.ext import blobstore
 import db_defs
 
 
@@ -18,6 +17,7 @@ class MainHandler(webapp2.RequestHandler):
 
 	template_variables = {}
 
+
 	def __init__(self, request, response):
 		self.initialize(request, response)
 		self.template_variables = {}
@@ -27,7 +27,7 @@ class MainHandler(webapp2.RequestHandler):
 		self.response.write(template.render(template_variables))
 
 	def get(self):
-		self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'active': x.active, 'key': x.key.urlsafe()} for x in db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()]
+		self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'platform': x.platform, 'reproduce': x.reproduce, 'description': x.description, 'key': x.key.urlsafe()} for x in db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()]
 		self.render('index.html', self.template_variables)
 
 	def post(self):
@@ -42,10 +42,15 @@ class MainHandler(webapp2.RequestHandler):
 
 				bug.bugName = self.request.get('bugName')
 				bug.bugClass = self.request.get('bugClass')
-				bug.active = True
+				bug.platform = self.request.get('platform')
+				if self.request.get('reproduce') == "True":
+					bug.reproduce = True 
+				else:
+					bug.reproduce = False
+				bug.description = self.request.get('description')
 				bug.put()
 
-			self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'active': x.active, 'key': x.key.urlsafe()} for x in db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()]
+			self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'platform': x.platform, 'reproduce': x.reproduce, 'description': x.description, 'key': x.key.urlsafe()} for x in db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()]
 			self.render('index.html', self.template_variables)
 	
 

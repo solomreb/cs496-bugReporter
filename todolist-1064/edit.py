@@ -1,3 +1,6 @@
+import webapp2
+import os
+import jinja2
 from google.appengine.ext import ndb
 import base_page
 import db_defs
@@ -5,13 +8,28 @@ import db_defs
 class Edit(base_page.MainHandler):
 	def __init__(self, request, response):
 		self.initialize(request, response)
-		self.template_values={}
-	#	self.template_values['edit_url'] = blobstore.create_upload_url( '/edit/channel')
+		self.template_variables={}
 
 	def get(self):
+		action = self.request.get('action')
 		bug_key = ndb.Key(urlsafe=self.request.get('key'))
 		bug = bug_key.get()
-		self.template_values['bug'] = bug
-		bugs = db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()
-		
-		self.render('edit.html',self.template_values)
+
+		if action == 'edit_bug':
+			if self.request.get('bugName') == "":
+				self.template_variables['message'] = "Title required"
+			else:
+				bug.bugName = self.request.get('bugName')
+				bug.bugClass = self.request.get('bugClass')
+				bug.platform = self.request.get('platform')
+				if self.request.get('reproduce') == "True":
+					bug.reproduce = True 
+				else:
+					bug.reproduce = False
+				bug.description = self.request.get('description')
+				bug.put()
+		self.template_variables['bug'] = bug
+		self.template_variables['bug_key'] = bug.key.urlsafe()
+		self.render('edit.html', self.template_variables)
+
+				

@@ -7,23 +7,54 @@
 <body>
 <h2>Edit Bug</h2>
 	<br>
-	<form>
-	<table border="1">
-		<tr>
-    		<th>Bug Title</th>
-    		<th>Class</th> 
-    		<th>Active</th>
-    		
-  		</tr>
 
-  		<tr>
-    		<td>{{ bug.bugName }}</td>
-    		<td>{{ bug.bugClass|e }}</td> 
-    		<td>{{ bug.active }}</td>
-  		</tr>
-  			
-	</table>
-	<form>
+	<section>
+	<form method="get" action="" enctype="multipart/form-data">
+	<input type="hidden" name="action" value="edit_bug" />
+	<fieldset>
+	<legend>Edit Bug:</legend>
+
+		<div>						
+		<label for="bugName">Title </label>
+			<input name="bugName" type="text" maxlength="255" value="{{ bug.bugName }}"/> 
+			{% if message %}
+    		<font color= "red">{{ message }}</font>
+			{% endif %}
+		</div>
+		<br>
+		<div>
+		<label for="bugClass">Class </label>
+		<select name="bugClass"> 
+		
+			<option value="Feature Request" {% if bug.bugClass == "Feature Request" %} selected="selected" {% endif %}>Feature Request</option>
+			<option value="System Error" {% if bug.bugClass == "System Error" %}selected="selected" {% endif %}>System Error</option>
+			<option value="Serious Bug" {% if bug.bugClass == "Serious Bug" %}selected="selected" {% endif %}>Serious Bug</option>
+		
+		</select> 
+		</div>
+		<br>
+		<div>
+		<label for="platform">Platform</label>
+			<input type="radio" name="platform" value="OS X">OS X
+			<input type="radio" name="platform" value="Windows">Windows
+			<input type="radio" name="platform" value="Linux">Linux
+		</div>
+		<br>
+		<div>
+		<label for="reproduce">Can it be reproduced?</label>
+			<input type="checkbox" name="reproduce" value="True">Yes
+  			<input type="checkbox" name="reproduce" value="False">No
+		</div>
+		<br>
+		<div>
+		<label for="description">Description</label>
+			<textarea name="description" form="baseForm" rows="5" cols="50"></textarea>
+		</div>
+		<br>
+		<input type="submit" value="Save Changes" /> <button style="background-color:lightgreen"><a href="/">BACK</a></button> 
+	</fieldset>
+	</form>
+	</section>
 
 	</body>
 </html>
