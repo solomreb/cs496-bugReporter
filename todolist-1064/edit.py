@@ -22,15 +22,14 @@ class Edit(base_page.MainHandler):
 				bug.bugName = self.request.get('bugName')
 				bug.bugClass = self.request.get('bugClass')
 				bug.platform = self.request.get('platform')
-				if self.request.get('reproduce') == "True":
-					bug.reproduce = True 
-				else:
-					bug.reproduce = False
+				bug.reproduce = self.request.get('reproduce')
 				bug.description = self.request.get('description')
 				bug.put()
 		self.template_variables['bug'] = bug
 		self.template_variables['bug_key'] = self.request.get('key')
 		self.render('edit.html', self.template_variables)
+
+
 
 
 				

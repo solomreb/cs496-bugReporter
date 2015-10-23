@@ -8,7 +8,7 @@
 	<h1>Bug Reporter</h1>
 
 	<section>
-	<form method="get" action="" id="baseForm">
+	<form method="post" action="" id="baseForm">
 	<fieldset>
 	<legend>Add Bug:</legend>
 		<input type="hidden" name="action" value="add_bug" />
@@ -40,8 +40,8 @@
 		<br>
 		<div>
 		<label for="reproduce">Can it be reproduced?</label>
-			<input type="checkbox" name="reproduce" value="True">Yes
-  			<input type="checkbox" name="reproduce" value="False">No
+			<input type="checkbox" name="reproduce" value="Yes">Yes
+  			<input type="checkbox" name="reproduce" value="No">No
 		</div>
 		<br>
 		<div>
@@ -54,10 +54,6 @@
 	</form>
 	</section>
 
-	<br>
-			{% if delete %}
-    		<font color= "green">Entry deleted</font>
-			{% endif %}
 	<br>
 
 	{% if bugs %}

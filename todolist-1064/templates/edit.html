@@ -8,7 +8,7 @@
 <h2>Edit Bug</h2>
 	<br>
 	<section>
-	<form method="get" action="" enctype="multipart/form-data">
+	<form method="get" action="" enctype="multipart/form-data" name="baseForm">
 	<input type="hidden" name="action" value="edit_bug" />
 	<input type="hidden" name="key" value="{{ bug_key }}" />
 	<fieldset>
@@ -42,13 +42,13 @@
 		<br>
 		<div>
 		<label for="reproduce">Can it be reproduced?</label>
-			<input type="checkbox" name="reproduce" value="True" {% if bug.reproduce == "True" %} checked="true" {% endif %}>Yes
-  			<input type="checkbox" name="reproduce" value="False" {% if bug.reproduce == "False" %} checked="true" {% endif %}>No
+			<input type="checkbox" name="reproduce" value="Yes" {% if bug.reproduce == "Yes" %} checked {% endif %}>Yes
+  			<input type="checkbox" name="reproduce" value="No" {% if bug.reproduce == "No" %} checked {% endif %}>No
 		</div> {{ bug.reproduce }}
 		<br>
 		<div>
 		<label for="description">Description</label>
-			<textarea name="description" form="baseForm" rows="5" cols="50">{{ bug.description }}</textarea>
+			<input type="text" name="description" value="{{ bug.description }}"></input>
 		</div>
 		<br>
 		<input type="submit" value="Save Changes" /> 
