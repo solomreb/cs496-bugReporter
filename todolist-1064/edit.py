@@ -29,7 +29,8 @@ class Edit(base_page.MainHandler):
 				bug.description = self.request.get('description')
 				bug.put()
 		self.template_variables['bug'] = bug
-		self.template_variables['bug_key'] = bug.key.urlsafe()
+		self.template_variables['bug_key'] = self.request.get('key')
 		self.render('edit.html', self.template_variables)
+
 
 				

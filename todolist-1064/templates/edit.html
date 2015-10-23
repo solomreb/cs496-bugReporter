@@ -7,10 +7,10 @@
 <body>
 <h2>Edit Bug</h2>
 	<br>
-
 	<section>
 	<form method="get" action="" enctype="multipart/form-data">
 	<input type="hidden" name="action" value="edit_bug" />
+	<input type="hidden" name="key" value="{{ bug_key }}" />
 	<fieldset>
 	<legend>Edit Bug:</legend>
 
@@ -35,23 +35,24 @@
 		<br>
 		<div>
 		<label for="platform">Platform</label>
-			<input type="radio" name="platform" value="OS X">OS X
-			<input type="radio" name="platform" value="Windows">Windows
-			<input type="radio" name="platform" value="Linux">Linux
+			<input type="radio" name="platform" value="OS X" {% if bug.platform == "OS X" %} checked {% endif %}>OS X
+			<input type="radio" name="platform" value="Windows" {% if bug.platform == "Windows" %} checked {% endif %}>Windows
+			<input type="radio" name="platform" value="Linux" {% if bug.platform == "Linux" %} checked {% endif %}>Linux
 		</div>
 		<br>
 		<div>
 		<label for="reproduce">Can it be reproduced?</label>
-			<input type="checkbox" name="reproduce" value="True">Yes
-  			<input type="checkbox" name="reproduce" value="False">No
-		</div>
+			<input type="checkbox" name="reproduce" value="True" {% if bug.reproduce == "True" %} checked="true" {% endif %}>Yes
+  			<input type="checkbox" name="reproduce" value="False" {% if bug.reproduce == "False" %} checked="true" {% endif %}>No
+		</div> {{ bug.reproduce }}
 		<br>
 		<div>
 		<label for="description">Description</label>
-			<textarea name="description" form="baseForm" rows="5" cols="50"></textarea>
+			<textarea name="description" form="baseForm" rows="5" cols="50">{{ bug.description }}</textarea>
 		</div>
 		<br>
-		<input type="submit" value="Save Changes" /> <button style="background-color:lightgreen"><a href="/">BACK</a></button> 
+		<input type="submit" value="Save Changes" /> 
+		<button style="background-color:lightgreen"><a href="/">BACK</a></button> 
 	</fieldset>
 	</form>
 	</section>
