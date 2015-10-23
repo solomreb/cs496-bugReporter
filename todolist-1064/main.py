@@ -5,6 +5,6 @@ import webapp2
 
 application = webapp2.WSGIApplication([
 		('/edit', 'edit.Edit'),
-		('/update', 'update.Update'),
+		('/delete', 'delete.Delete'),
 		('/', 'base_page.MainHandler')
 	], debug=True)
