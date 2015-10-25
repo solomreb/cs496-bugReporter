@@ -3,9 +3,27 @@
 <head>
 	<meta content="text/html; charset=UTF-8">
 	<title>Edit Bug</title>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h2>Edit Bug</h2>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Bug Reporter</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li class="active"><a href="#">Edit</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
 	<br>
 	<section>
 	<form method="get" action="" enctype="multipart/form-data" name="baseForm">
@@ -16,7 +34,7 @@
 
 		<div>						
 		<label for="bugName">Title </label>
-			<input name="bugName" type="text" maxlength="255" value="{{ bug.bugName }}"/> 
+			<input name="bugName" type="text" class="form-control" value="{{ bug.bugName }}"/> 
 			{% if message %}
     		<font color= "red">{{ message }}</font>
 			{% endif %}
@@ -42,20 +60,20 @@
 		<br>
 		<div>
 		<label for="reproduce">Can it be reproduced?</label>
-			<input type="checkbox" name="reproduce" value="Yes" {% if bug.reproduce == "Yes" %} checked {% endif %}>Yes
-  			<input type="checkbox" name="reproduce" value="No" {% if bug.reproduce == "No" %} checked {% endif %}>No
-		</div> {{ bug.reproduce }}
+			<label class="checkbox-inline"><input type="checkbox" {% if bug.reproduce == "Yes" %} checked {% endif %} value="Yes">Yes</label>
+			<<label class="checkbox-inline"><input type="checkbox" {% if bug.reproduce == "No" %} checked {% endif %} value="No">No</label>
+		</div>
 		<br>
 		<div>
 		<label for="description">Description</label>
-			<input type="text" name="description" value="{{ bug.description }}"></input>
+			<input class="form-control" type="text" name="description" value="{{ bug.description }}"></input>
 		</div>
 		<br>
 		<input type="submit" value="Save Changes" /> 
-		<button style="background-color:lightgreen"><a href="/">BACK</a></button> 
+		
 	</fieldset>
 	</form>
 	</section>
-
+</div>
 	</body>
 </html>

@@ -3,21 +3,40 @@
 <head>
 	<meta content="text/html; charset=UTF-8">
 	<title>Bug Reporter</title>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<h1>Bug Reporter</h1>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Bug Reporter</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
 
 	<section>
-	<form method="post" action="" id="baseForm">
+	<form method="post" action="" id="baseForm" role="form">
+  	<div class="form-group">
 	<fieldset>
 	<legend>Add Bug:</legend>
 		<input type="hidden" name="action" value="add_bug" />
 
 		<div>						
 		<label for="bugName">Title </label>
-			<input name="bugName" type="text" maxlength="255" value=""/> 
+			<input name="bugName" type="text" class="form-control" value=""/> 
 			{% if message %}
-    		<font color= "red">{{ message }}</font>
+    		<p class="text-danger">{{ message }}</p>
 			{% endif %}
 		</div>
 		<br>
@@ -33,31 +52,31 @@
 		<br>
 		<div>
 		<label for="platform">Platform</label>
-			<input type="radio" name="platform" value="OS X">OS X
-			<input type="radio" name="platform" value="Windows">Windows
-			<input type="radio" name="platform" value="Linux">Linux
+			<label class="radio-inline"><input type="radio" name="platform" value="OS X">OS X</label>
+			<label class="radio-inline"><input type="radio" name="platform" value="Windows">Windows</label>
+			<label class="radio-inline"><input type="radio" name="platform" value="Linux">Linux</label>
 		</div>
 		<br>
 		<div>
 		<label for="reproduce">Can it be reproduced?</label>
-			<input type="checkbox" name="reproduce" value="Yes">Yes
-  			<input type="checkbox" name="reproduce" value="No">No
+			<label class="checkbox-inline"><input type="checkbox" value="Yes">Yes</label>
+			<label class="checkbox-inline"><input type="checkbox" value="No">No</label>
 		</div>
 		<br>
 		<div>
 		<label for="description">Description</label>
-			<textarea name="description" form="baseForm" rows="5" cols="50"></textarea>
+			<input type="text" class="form-control" name="description"></textarea>
 		</div>
 		<br>
 		<input type="submit" value="Add Entry" /> 
 	</fieldset>
+	</div>
 	</form>
 	</section>
 
 	<br>
-
 	{% if bugs %}
-	<table border="1">
+	<table class="table table-striped">
 		<tr>
     		<th>Bug Title</th>
     		<th>Class</th> 
@@ -84,6 +103,6 @@
 
 	{% endif %}
 
-
+</div>
 	</body>
 </html>
