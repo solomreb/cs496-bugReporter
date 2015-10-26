@@ -1,0 +1,46 @@
+### All tests done in Postman Google Chrome extension ###
+
+TEST #1a: Adding a Bug
+
+	Request URI: todolist-1094.appspot.com/bug
+
+	Request Method: POST
+
+	Request Parameters: bugName=hello
+
+	Result: {"platform": null, "bugClass": null, "bugName": "hello", "users": [], "reproduce": null, "description": null}
+
+
+TEST #1b: Adding another Bug
+
+	Request URI: todolist-1094.appspot.com/bug
+
+	Request Method: POST
+
+	Request Parameters: bugName=another bug
+
+	Result: {"users": [], "bugName": "another bug", "reproduce": null, "platform": null, "bugClass": null, "description": null}
+
+
+TEST #2: Displaying all Bugs
+
+	Request URI: todolist-1094.appspot.com/bug
+
+	Request Method: GET
+
+	Request Parameters: none
+
+	Result: {"keys": [5629499534213120, 5649391675244544]}
+
+
+TEST #3: Get a single Bug
+
+	Request URI: todolist-1094.appspot.com/bug/5649391675244544
+
+	Request Method: GET
+
+	Request Parameters: none
+
+	Result: {"users": [], "bugName": "another bug", "reproduce": null, "platform": null, "bugClass": null, "description": null}
+
+

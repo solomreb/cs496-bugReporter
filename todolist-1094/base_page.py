@@ -27,7 +27,7 @@ class MainHandler(webapp2.RequestHandler):
 		self.response.write(template.render(template_variables))
 
 	def get(self):
-		self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'platform': x.platform, 'reproduce': x.reproduce, 'description': x.description, 'key': x.key.urlsafe()} for x in db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()]
+		self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'platform': x.platform, 'reproduce': x.reproduce, 'description': x.description, 'key': x.key.urlsafe()} for x in db_defs.Bug.query(ancestor=ndb.Key(db_defs.Bug, 'base-data')).fetch()]
 		self.render('index.html', self.template_variables)
 
 	def post(self):
@@ -37,8 +37,8 @@ class MainHandler(webapp2.RequestHandler):
 			if self.request.get('bugName') == "":
 				self.template_variables['message'] = "Title required"
 			else:
-				k = ndb.Key(db_defs.bugEntry, 'base-data')
-				bug = db_defs.bugEntry(parent=k)
+				k = ndb.Key(db_defs.Bug, 'base-data')
+				bug = db_defs.Bug(parent=k)
 
 				bug.bugName = self.request.get('bugName')
 				bug.bugClass = self.request.get('bugClass')
@@ -47,7 +47,7 @@ class MainHandler(webapp2.RequestHandler):
 				bug.description = self.request.get('description')
 				bug.put()
 
-			self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'platform': x.platform, 'reproduce': x.reproduce, 'description': x.description, 'key': x.key.urlsafe()} for x in db_defs.bugEntry.query(ancestor=ndb.Key(db_defs.bugEntry, 'base-data')).fetch()]
+			self.template_variables['bugs'] = [{'name': x.bugName, 'class': x.bugClass, 'platform': x.platform, 'reproduce': x.reproduce, 'description': x.description, 'key': x.key.urlsafe()} for x in db_defs.Bug.query(ancestor=ndb.Key(db_defs.Bug, 'base-data')).fetch()]
 			self.render('index.html', self.template_variables)
 	
 
