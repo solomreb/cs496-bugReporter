@@ -2,45 +2,173 @@
 
 TEST #1a: Adding a Bug
 
-	Request URI: todolist-1094.appspot.com/bug
+	CURL command: curl --data "bugName=hello" http://todolist-1094.appspot.com/bug
 
-	Request Method: POST
+	Result: {"users": [], "bugName": "test", "reproduce": null, "platform": null, "bugClass": null, "description": null}Apples-MacBook-Pro:~ beckysolomon$ 
 
-	Request Parameters: bugName=hello
+TEST #1b: Adding another Bug with more fields
 
-	Result: {"platform": null, "bugClass": null, "bugName": "hello", "users": [], "reproduce": null, "description": null}
+	CURL command: curl --data "bugName=hello&bugClass=seriousbug" http://todolt.com/bugappspot
 
-
-TEST #1b: Adding another Bug
-
-	Request URI: todolist-1094.appspot.com/bug
-
-	Request Method: POST
-
-	Request Parameters: bugName=another bug
-
-	Result: {"users": [], "bugName": "another bug", "reproduce": null, "platform": null, "bugClass": null, "description": null}
+	Result: {"users": [], "bugName": "hello", "reproduce": null, "platform": null, "bugClass": "seriousbug", "description": null}
 
 
 TEST #2: Displaying all Bugs
 
-	Request URI: todolist-1094.appspot.com/bug
+	CURL command: curl http://todolist-1094.appspot.com/bug
 
-	Request Method: GET
-
-	Request Parameters: none
-
-	Result: {"keys": [5629499534213120, 5649391675244544]}
+	Result: {"keys": [5634472569470976, 5659313586569216]}
 
 
 TEST #3: Get a single Bug
 
-	Request URI: todolist-1094.appspot.com/bug/5649391675244544
+  CURL command: curl http://todolist-1094.appspot.com/bug/5659313586569216
 
-	Request Method: GET
+	Result: {"users": [], "bugName": "test", "reproduce": null, "platform": null, "bugClass": null, "description": null}
 
-	Request Parameters: none
+TEST #4: Update a Bug
 
-	Result: {"users": [], "bugName": "another bug", "reproduce": null, "platform": null, "bugClass": null, "description": null}
+	CURL command: curl -X PUT --data "bugClass=serious bug" http://todolist-1094.appspot.com/bug/5634472569470976
+
+	Result: 
+    	<html>
+      	<head>
+        <title>Internal Server Error</title>
+        <style>
+          body {
+            padding: 20px;
+            font-family: arial, sans-serif;
+            font-size: 14px;
+          }
+          pre {
+            background: #F2F2F2;
+            padding: 10px;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>Internal Server Error</h1>
+        <p>The server has either erred or is incapable of performing
+        the requested operation.</p>
+        <pre>Traceback (most recent call last):
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 1535, in __call__
+        rv = self.handle_exception(request, response, e)
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 1529, in __call__
+        rv = self.router.dispatch(request, response)
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 1278, in default_dispatcher
+        return route.handler_adapter(request, response)
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 1102, in __call__
+        return handler.dispatch()
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 572, in dispatch
+        return self.handle_exception(e, self.app.debug)
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 570, in dispatch
+        return method(*args, **kwargs)
+      File &quot;/base/data/home/apps/s~todolist-1094/2.388110657336716758/bug.py&quot;, line 72, in put
+        bug.put()
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 3432, in _put
+        return self._put_async(**ctx_options).get_result()
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/tasklets.py&quot;, line 326, in get_result
+        self.check_success()
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/tasklets.py&quot;, line 369, in _help_tasklet_along
+        value = gen.throw(exc.__class__, exc, tb)
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/context.py&quot;, line 810, in put
+        key = yield self._put_batcher.add(entity, options)
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/tasklets.py&quot;, line 372, in _help_tasklet_along
+        value = gen.send(val)
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/context.py&quot;, line 343, in _put_tasklet
+        keys = yield self._conn.async_put(options, datastore_entities)
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/datastore/datastore_rpc.py&quot;, line 1852, in async_put
+        pbs = [entity_to_pb(entity) for entity in entities]
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 682, in entity_to_pb
+        pb = ent._to_pb()
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 3138, in _to_pb
+        self._check_initialized()
+      File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 2994, in _check_initialized
+        'Entity has uninitialized properties: %s' % ', '.join(baddies))
+    BadValueError: Entity has uninitialized properties: bugName
+    </pre>
+      </body>
+
+TEST #5: Delete a Bug
+
+
+  CURL command: curl -X DELETE  http://todolist-1094.appspot.com/bug/5634472569470976
+    THEN curl http://todolist-1094.appspot.com/bug/5634472569470976
+
+  Result: {"keys": [5654313976201216, 5659313586569216]}
+  EXPECTED
+
+TEST #6: Add a user to a bug
+
+  CURL Command: curl --data "name=johndoe" -H "Accept: application/json" http://todo94.appspot.com/bug/5091364022779904/user
+
+  Result: FAILED
+      <html>
+        <head>
+          <title>Internal Server Error</title>
+          <style>
+            body {
+              padding: 20px;
+              font-family: arial, sans-serif;
+              font-size: 14px;
+            }
+            pre {
+              background: #F2F2F2;
+              padding: 10px;
+            }
+          </style>
+        </head>
+        <body>
+          <h1>Internal Server Error</h1>
+          <p>The server has either erred or is incapable of performing
+          the requested operation.</p>
+          <pre>Traceback (most recent call last):
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 1535, in __call__
+          rv = self.handle_exception(request, response, e)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 1529, in __call__
+          rv = self.router.dispatch(request, response)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 1278, in default_dispatcher
+          return route.handler_adapter(request, response)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 1102, in __call__
+          return handler.dispatch()
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 572, in dispatch
+          return self.handle_exception(e, self.app.debug)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 570, in dispatch
+          return method(*args, **kwargs)
+        File &quot;/base/data/home/apps/s~todolist-1094/2.388112134666570963/user.py&quot;, line 34, in post
+          new_user.bugid = bugKey
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 1383, in __set__
+          self._set_value(entity, value)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 1128, in _set_value
+          value = self._do_validate(value)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 1075, in _do_validate
+          value = self._call_shallow_validation(value)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 1267, in _call_shallow_validation
+          return call(value)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 1314, in call
+          newvalue = method(self, value)
+        File &quot;/base/data/home/runtimes/python27/python27_lib/versions/1/google/appengine/ext/ndb/model.py&quot;, line 1602, in _validate
+          (value,))
+      BadValueError: Expected integer, got Key('Bug', 5091364022779904)
+      </pre>
+        </body>
+
+TEST #7: Get all users associated with a bug
+  
+  CURL Command: curl http://todolist-1094.appspot.com/5091364022779904/user
+
+  Result: FAILED
+      <html>
+       <head>
+        <title>404 Not Found</title>
+       </head>
+       <body>
+        <h1>404 Not Found</h1>
+        The resource could not be found.<br /><br />
+
+
+
+       </body>
+      </html>
 
 

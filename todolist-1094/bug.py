@@ -23,11 +23,21 @@ class Bug(webapp2.RequestHandler):
 
 		new_bug = db_defs.Bug()
 		bugName = self.request.get('bugName', default_value=None)
+		bugClass = self.request.get('bugClass', default_value=None)
+		platform = self.request.get('platform', default_value=None)
+		description = self.request.get('description', default_value=None)
+
 		if bugName:
 			new_bug.bugName = bugName
 		else:
 			self.response.status = 400
 			self.response.status_message = "Invalid request: bug name required"
+		if bugClass:
+			new_bug.bugClass = bugClass
+		if platform:
+			new_bug.platform = platform
+		if description:
+			new_bug.description = description
 		key = new_bug.put()
 		out = new_bug.to_dict()
 		self.response.write(json.dumps(out))

@@ -33,6 +33,7 @@ class User(webapp2.RequestHandler):
 		new_user = db_defs.User()
 		new_user.bugid = bugKey
 		
+		
 		name = self.request.get('name', default_value=None)
 		email = self.request.get('email', default_value=None)
 		if name:
@@ -40,7 +41,6 @@ class User(webapp2.RequestHandler):
 		else:
 			self.response.status = 400
 			self.response.status_message = "Not acceptable: Need a Name"
-			
 
 		if email:
 			new_user.email = email
@@ -48,13 +48,12 @@ class User(webapp2.RequestHandler):
 			self.response.status = 400
 			self.response.status_message = "Not acceptable: Need an Email"
 
-		key = new_User.put()
-		out = new_User.to_dict()
+		key = new_user.put()
+		out = new_user.to_dict()
 		self.response.write(json.dumps(out))
 		
 		#Add this User to the bug's users
 		bug = ndb.Key(db_defs.Bug, int(kwargs['bugid'])).get()
-		bug.U
 		user.append(key)
 
 		bkey = bug.put()
@@ -68,7 +67,7 @@ class User(webapp2.RequestHandler):
 		
 		#Get all Users associated with a specified bug
 		if 'bugid' in kwargs:
-			bug = ndb.Key(db_defs.bug, int(kwargs['bugid'])).get()
+			bug = ndb.Key(db_defs.Bug, int(kwargs['bugid'])).get()
 			if not bug:
 				self.response.status = 404
 				self.response.status_message = "bug not Found"

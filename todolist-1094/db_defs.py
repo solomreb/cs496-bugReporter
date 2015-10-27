@@ -22,7 +22,7 @@ class Bug(ndb.Model):
 class User(Model):
 	name = ndb.StringProperty(required=True)
 	email = ndb.StringProperty(required=True)
-	bugId = ndb.IntegerProperty(required=True)
+	bugid = ndb.IntegerProperty(required=True)
 
 	def to_dict(self):
 		d = super(User, self).to_dict()
